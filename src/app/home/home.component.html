@@ -1,9 +1,9 @@
 <div *ngIf="showSpinner" class="loader">
   <app-fulfilling-bouncing-circle-spinner
-animation-duration="4000"
-size="150"
-color="#551572"
-></app-fulfilling-bouncing-circle-spinner>    
+    animation-duration="4000"
+    size="150"
+    color="#551572">
+  </app-fulfilling-bouncing-circle-spinner>    
 </div>
 <div class="container container-tns">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -15,26 +15,11 @@ color="#551572"
         <input type="file" (change)="onFileChange($event)" class="custom-file-input" id="file" aria-describedby="id">
         <label class="custom-file-label" for="file">{{fileInput}}</label>
       </div>
-    </div>
-      <div class="form-group form-group-tns">
-        <button class="btn primary-button" type="button" id="btn1" (click)="onRegister()">Registrar</button>
-        <button class="btn secondary-button" type="button" id="btn2" (click)="onCompare()">Comparar</button>
-      </div>
+    </div>      
+        <div class="form-group form-group-tns">
+          <button class="btn primary-button" type="button" id="btn1" (click)="onRegister()">Registrar</button>
+          <button class="btn secondary-button" type="button" id="btn2" (click)="onCompare()">Comparar</button>
+        </div>
     
   </form>
 </div>
-
-<ng-template #content let-c="close" let-d="dismiss">
-    <div class="modal-header tns-header">
-      <h4 class="modal-title" id="modal-basic-title">Marat&oacute;n TDD</h4>
-      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <p>{{result}}</p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn cancel-button" (click)="c('Save click')">Aceptar</button>
-    </div>
-  </ng-template>

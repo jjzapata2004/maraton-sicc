@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import swal from 'sweetalert';
 import { MaratonService } from '../maraton.service';
 
 @Component({
@@ -16,8 +16,7 @@ export class HomeComponent implements OnInit {
   fileInput: string = 'Seleccione un archivo...';
   showSpinner = false;
 
-  constructor(private fb : FormBuilder, private service : MaratonService, 
-    private modalService : NgbModal, config: NgbModalConfig) {
+  constructor(private fb : FormBuilder, private service : MaratonService, config: NgbModalConfig) {
     this.form = this.fb.group({
       user: ['', Validators.required],
       file: null
@@ -37,12 +36,10 @@ export class HomeComponent implements OnInit {
   onRegister() {
     const formModel = this.prepareSave();
     this.service.register(formModel).subscribe(data => {
-      console.log(data);
       this.showSpinner = false;
-      this.openModal(data.result);
+      swal("Bien hecho!", data.result, "success");
     }, err => {
-      this.showSpinner = false;
-      this.openModal(err.error.message);
+      this.errorMessage(err);
     });
   }
 
@@ -50,10 +47,9 @@ export class HomeComponent implements OnInit {
     const formModel = this.prepareSave();
     this.service.compare(formModel).subscribe(data => {
       this.showSpinner = false;
-      this.openModal(data.result);
+      swal("Bien hecho!", data.result, "success");
     }, err => {
-      this.showSpinner = false;
-      this.openModal(err.error.message);
+      this.errorMessage(err);
     });
   }
 
@@ -65,9 +61,13 @@ export class HomeComponent implements OnInit {
     return input;
   }
 
-  private openModal(message){
-    this.result = message;
-    this.modalService.open(this.modal);
+  private errorMessage(err){
+    this.showSpinner = false;
+      if(err.error.message){
+        swal("Ups!", err.error.message, "error");
+      }else{
+        swal("Error de conexión!", "Verifique que el servicio se encuentre disponible", "error");
+      }
   }
 
   ngOnInit() {
